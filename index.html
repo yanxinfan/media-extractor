@@ -80,18 +80,18 @@ body { background:var(--bg); color:var(--text); font-family: -apple-system, Blin
 <div class="app">
   <div class="header">
     <h1>📡 媒体提取工具</h1>
-    <div class="sub">抖音 · 小红书 · B站 | 视频/图文提取 · 音频下载 · 评论抓取</div>
+    <div class="sub">抖音 · 小红�?· B�?| 视频/图文提取 · 音频下载 · 评论抓取</div>
   </div>
 
   <div class="card">
     <div class="card-title">🔗 粘贴链接</div>
     <div class="platforms">
       <span class="platform-badge douyin active" data-p="douyin">🎵 抖音</span>
-      <span class="platform-badge xiaohongshu" data-p="xiaohongshu">📕 小红书</span>
-      <span class="platform-badge bilibili" data-p="bilibili">📺 B站</span>
+      <span class="platform-badge xiaohongshu" data-p="xiaohongshu">📕 小红�?/span>
+      <span class="platform-badge bilibili" data-p="bilibili">📺 B�?/span>
     </div>
     <div class="input-row">
-      <input type="text" id="linkInput" placeholder="粘贴抖音/小红书/B站分享链接...">
+      <input type="text" id="linkInput" placeholder="粘贴抖音/小红�?B站分享链�?..">
       <button class="btn btn-primary" id="btnParse">🔍 解析</button>
     </div>
     <div class="progress-wrap hidden" id="progressWrap">
@@ -106,13 +106,13 @@ body { background:var(--bg); color:var(--text); font-family: -apple-system, Blin
   </div>
 
   <div class="card hidden" id="commentCard">
-    <div class="card-title">💬 评论区</div>
+    <div class="card-title">💬 评论�?/div>
     <div id="commentArea"></div>
   </div>
 
   <div class="card">
     <div class="log-area" id="logArea">
-      <div class="log-line">🟢 工具就绪，粘贴链接开始提取。</div>
+      <div class="log-line">🟢 工具就绪，粘贴链接开始提取�?/div>
     </div>
   </div>
 </div>
@@ -121,7 +121,7 @@ body { background:var(--bg); color:var(--text); font-family: -apple-system, Blin
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 
-const state = { platform: 'douyin', result: null, proxyUrl: '/api/extract' };
+const state = { platform: 'douyin', result: null, proxyUrl: 'https://admirable-blini-006cf0.netlify.app/api/extract' };
 
 // Platform badges
 $$('.platform-badge').forEach(b => {
@@ -165,12 +165,12 @@ function hideProgress() { $('#progressWrap').classList.add('hidden'); }
 // Parse
 $('#btnParse').addEventListener('click', async () => {
   const url = $('#linkInput').value.trim();
-  if (!url) { log('请粘贴链接', 'error'); return; }
+  if (!url) { log('请粘贴链�?, 'error'); return; }
 
   $('#btnParse').disabled = true;
-  $('#btnParse').textContent = '⏳ 解析中...';
+  $('#btnParse').textContent = '�?解析�?..';
   showProgress('正在解析...');
-  log(`开始解析: ${url}`);
+  log(`开始解�? ${url}`);
 
   try {
     const apiUrl = state.proxyUrl.startsWith('/') 
@@ -193,9 +193,9 @@ $('#btnParse').addEventListener('click', async () => {
     renderResult(data);
     $('#resultCard').classList.remove('hidden');
     $('#progressFill').style.width = '100%';
-    log(`✅ 解析成功: ${data.title || '未知标题'}`, 'success');
+    log(`�?解析成功: ${data.title || '未知标题'}`, 'success');
   } catch (err) {
-    log(`❌ 解析失败: ${err.message}`, 'error');
+    log(`�?解析失败: ${err.message}`, 'error');
   } finally {
     hideProgress();
     $('#btnParse').disabled = false;
@@ -211,7 +211,7 @@ function renderResult(data) {
   if (data.type === 'video' && data.videoUrl) {
     html += `<video src="${data.videoUrl}" controls style="width:100%;max-height:400px;border-radius:8px;background:#000"></video>`;
   } else if (data.type === 'video') {
-    html += '<div style="padding:40px;text-align:center;color:var(--text2)">🎬 视频链接需通过第三方工具获取</div>';
+    html += '<div style="padding:40px;text-align:center;color:var(--text2)">🎬 视频链接需通过第三方工具获�?/div>';
   }
 
   if (data.cover && !data.videoUrl) {
@@ -237,7 +237,7 @@ function renderResult(data) {
   // Actions
   html += '<div class="result-actions">';
   if (data.videoUrl) {
-    html += `<button class="btn btn-primary btn-sm" onclick="downloadMedia('${data.videoUrl}', 'video.mp4')">⬇ 下载视频</button>`;
+    html += `<button class="btn btn-primary btn-sm" onclick="downloadMedia('${data.videoUrl}', 'video.mp4')">�?下载视频</button>`;
   }
   if (data.cover) {
     html += `<button class="btn btn-outline btn-sm" onclick="downloadMedia('${data.cover}', 'cover.jpg')">🖼 下载封面</button>`;
@@ -260,7 +260,7 @@ function downloadMedia(url, filename) {
   a.download = filename;
   a.target = '_blank';
   a.click();
-  log(`开始下载: ${filename}`);
+  log(`开始下�? ${filename}`);
 }
 
 function downloadAllImages() {
@@ -268,12 +268,12 @@ function downloadAllImages() {
   state.result.images.forEach((img, i) => {
     setTimeout(() => downloadMedia(img, `image_${i+1}.jpg`), i * 500);
   });
-  log(`正在下载 ${state.result.images.length} 张图片...`);
+  log(`正在下载 ${state.result.images.length} 张图�?..`);
 }
 
 async function fetchComments() {
   $('#btnFetchComments').disabled = true;
-  $('#btnFetchComments').textContent = '⏳ 加载中...';
+  $('#btnFetchComments').textContent = '�?加载�?..';
   log('正在获取评论...');
 
   try {
@@ -309,12 +309,12 @@ function renderComments(comments) {
   });
   area.innerHTML = html;
   $('#commentCard').classList.remove('hidden');
-  log(`加载了 ${comments.length} 条评论`, 'success');
+  log(`加载�?${comments.length} 条评论`, 'success');
 }
 
 // Init
-log('💡 支持: 抖音短链接 / 小红书分享链接 / B站视频链接');
-log('⚠ 部分平台需要登录Cookie才能完整解析，基础信息可直接提取');
+log('💡 支持: 抖音短链�?/ 小红书分享链�?/ B站视频链�?);
+log('�?部分平台需要登录Cookie才能完整解析，基础信息可直接提�?);
 </script>
 </body>
 </html>
