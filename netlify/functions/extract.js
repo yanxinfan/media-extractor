@@ -34,7 +34,7 @@ async function parseMedia(url) {
 
   // Resolve short links
   try {
-    const r = await fetch(url, { method: 'HEAD', redirect: 'manual', signal: AbortSignal.timeout(3000) });
+    const r = await fetch(url, { method: 'HEAD', redirect: 'manual',  });
     const loc = r.headers.get('location');
     if (loc) finalUrl = new URL(loc, url).href;
   } catch (e) {}
@@ -43,7 +43,7 @@ async function parseMedia(url) {
   if (platform === 'douyin') {
     try {
       const apiUrl = 'https://devtool.liam.design/douyin/parse?url=' + encodeURIComponent(finalUrl);
-      const r = await fetch(apiUrl, { signal: AbortSignal.timeout(8000) });
+      const r = await fetch(apiUrl {});
       const d = await r.json();
       if (d.code === 200 && d.data) {
         return {
@@ -66,7 +66,7 @@ async function parseMedia(url) {
     try {
       const r = await fetch(finalUrl, {
         headers: { 'User-Agent': 'Mozilla/5.0' },
-        signal: AbortSignal.timeout(8000)
+        
       });
       const html = await r.text();
       const titleMatch = html.match(/<title>([^<]+)<\/title>/);
@@ -83,7 +83,7 @@ async function parseMedia(url) {
       if (!bv) return { error: '鏃犳晥B绔欓摼鎺? };
       const r = await fetch('https://api.bilibili.com/x/web-interface/view?bvid=' + bv[0], {
         headers: { 'User-Agent': 'Mozilla/5.0', 'Referer': 'https://www.bilibili.com' },
-        signal: AbortSignal.timeout(5000)
+        
       });
       const d = await r.json();
       if (d.code !== 0) return { error: d.message };
