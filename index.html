@@ -5,93 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>媒体提取工具 - Media Extractor</title>
 <style>
-:root {
-  --bg: #0f0f23;
-  --card: #1a1a2e;
-  --border: #2a2a4a;
-  --accent: #e94560;
-  --accent2: #0f3460;
-  --text: #eee;
-  --text2: #8892b0;
-  --success: #2ecc71;
-  --warn: #f39c12;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height:100vh; }
-.app { max-width:800px; margin:0 auto; padding:20px; }
-.header { text-align:center; padding:30px 0 20px; }
-.header h1 { font-size:28px; background:linear-gradient(135deg, #e94560, #f39c12); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.header .sub { color:var(--text2); margin-top:6px; font-size:14px; }
-.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:16px; }
-.card-title { font-size:16px; font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
-
-/* Input */
-.input-row { display:flex; gap:10px; }
-.input-row input { flex:1; padding:12px 16px; background:#0a0a1a; border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:14px; outline:none; transition:border .2s; }
-.input-row input:focus { border-color:var(--accent); }
-.btn { padding:12px 24px; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; }
-.btn-primary { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:#c0392b; }
-.btn-primary:disabled { opacity:0.5; cursor:default; }
-.btn-sm { padding:8px 16px; font-size:12px; }
-.btn-outline { background:transparent; border:1px solid var(--accent); color:var(--accent); }
-.btn-outline:hover { background:var(--accent); color:#fff; }
-
-/* Platform badges */
-.platforms { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
-.platform-badge { padding:6px 14px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid var(--border); transition:all .2s; }
-.platform-badge:hover, .platform-badge.active { border-color:var(--accent); background:rgba(233,69,96,.1); }
-.platform-badge.douyin { color:#ff0050; }
-.platform-badge.xiaohongshu { color:#fe2c55; }
-.platform-badge.bilibili { color:#fb7299; }
-
-/* Result */
-.result { margin-top:16px; }
-.result-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.result-card { background:#0a0a1a; border-radius:8px; overflow:hidden; }
-.result-card img, .result-card video { width:100%; display:block; max-height:300px; object-fit:contain; background:#000; }
-.result-info { padding:12px; }
-.result-info .title { font-size:14px; font-weight:600; margin-bottom:4px; }
-.result-info .meta { font-size:12px; color:var(--text2); }
-.result-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-
-/* Progress */
-.progress-wrap { margin-top:12px; }
-.progress-bar { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
-.progress-fill { height:100%; background:var(--accent); width:0; transition:width .3s; }
-.progress-text { font-size:12px; color:var(--text2); margin-top:4px; }
-
-/* Log */
-.log-area { max-height:200px; overflow-y:auto; font-size:12px; color:var(--text2); }
-.log-line { padding:3px 0; border-bottom:1px solid rgba(255,255,255,.03); }
-.log-line.error { color:var(--accent); }
-.log-line.success { color:var(--success); }
-
-/* Reply */
-.comment { background:#0a0a1a; border-radius:6px; padding:10px 12px; margin-bottom:8px; }
-.comment .user { font-weight:600; font-size:13px; color:var(--accent); }
-.comment .text { font-size:13px; margin-top:4px; color:var(--text2); }
-.comment .time { font-size:11px; color:#555; margin-top:2px; }
-
-.hidden { display:none !important; }
+:root { --bg: #0f0f1a; --card: #1a1a2e; --accent: #e94560; --text: #eee; --text2: #999; --border: #2a2a4a; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+.app { max-width: 680px; margin: 0 auto; padding: 20px 16px 40px; }
+.header { text-align: center; padding: 20px 0 10px; }
+.header h1 { font-size: 24px; margin-bottom: 4px; }
+.header .sub { color: var(--text2); font-size: 13px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+.platforms { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.platform-badge { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 1px solid var(--border); color: var(--text2); transition: all .2s; }
+.platform-badge:hover { border-color: var(--accent); color: var(--text); }
+.platform-badge.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.input-row { display: flex; gap: 10px; }
+.input-row input { flex: 1; padding: 12px 16px; background: #12122a; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; }
+.input-row input:focus { border-color: var(--accent); }
+.btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .2s; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-outline:hover { border-color: var(--accent); }
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+.progress-wrap { margin-top: 12px; }
+.progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.progress-text { font-size: 12px; color: var(--text2); margin-top: 6px; }
+.result-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.log-area { height: 200px; overflow-y: auto; font-size: 13px; font-family: 'Consolas', 'Courier New', monospace; }
+.log-line { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
+.log-line.error { color: #f87171; }
+.log-line.success { color: #4ade80; }
+.log-line.info { color: var(--text2); }
+.comment { padding: 10px; border-bottom: 1px solid var(--border); }
+.comment .user { font-weight: 600; font-size: 13px; color: var(--accent); }
+.comment .text { font-size: 14px; margin-top: 4px; }
+.comment .time { font-size: 11px; color: var(--text2); margin-top: 4px; }
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
     <h1>📡 媒体提取工具</h1>
-    <div class="sub">抖音 · 小红�?· B�?| 视频/图文提取 · 音频下载 · 评论抓取</div>
+    <div class="sub">抖音 · 小红书 · B站 | 视频/图文提取</div>
   </div>
 
   <div class="card">
     <div class="card-title">🔗 粘贴链接</div>
     <div class="platforms">
       <span class="platform-badge douyin active" data-p="douyin">🎵 抖音</span>
-      <span class="platform-badge xiaohongshu" data-p="xiaohongshu">📕 小红�?/span>
-      <span class="platform-badge bilibili" data-p="bilibili">📺 B�?/span>
+      <span class="platform-badge xiaohongshu" data-p="xiaohongshu">📕 小红书</span>
+      <span class="platform-badge bilibili" data-p="bilibili">📺 B站</span>
     </div>
     <div class="input-row">
-      <input type="text" id="linkInput" placeholder="粘贴抖音/小红�?B站分享链�?..">
+      <input type="text" id="linkInput" placeholder="粘贴抖音/小红书/B站分享链接...">
       <button class="btn btn-primary" id="btnParse">🔍 解析</button>
     </div>
     <div class="progress-wrap hidden" id="progressWrap">
@@ -101,60 +69,34 @@ body { background:var(--bg); color:var(--text); font-family: -apple-system, Blin
   </div>
 
   <div class="card hidden" id="resultCard">
-    <div class="card-title">📋 提取结果</div>
+    <div class="card-title">📋 解析结果</div>
     <div id="resultArea"></div>
   </div>
 
   <div class="card hidden" id="commentCard">
-    <div class="card-title">💬 评论�?/div>
+    <div class="card-title">💬 评论</div>
     <div id="commentArea"></div>
   </div>
 
   <div class="card">
     <div class="log-area" id="logArea">
-      <div class="log-line">🟢 工具就绪，粘贴链接开始提取�?/div>
+      <div class="log-line info">🟢 工具就绪，粘贴链接开始解析</div>
     </div>
   </div>
 </div>
 
 <script>
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
+const $ = (s) => document.querySelector(s);
+const state = { proxyUrl: 'https://admirable-blini-006cf0.netlify.app/api/extract', result: null };
 
-const state = { platform: 'douyin', result: null, proxyUrl: 'https://admirable-blini-006cf0.netlify.app/api/extract' };
-
-// Platform badges
-$$('.platform-badge').forEach(b => {
-  b.addEventListener('click', () => {
-    $$('.platform-badge').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    state.platform = b.dataset.p;
-  });
-});
-
-// Auto-detect platform from URL
-$('#linkInput').addEventListener('input', () => {
-  const url = $('#linkInput').value;
-  if (url.includes('douyin.com')) updatePlatform('douyin');
-  else if (url.includes('xiaohongshu.com') || url.includes('xhslink.com')) updatePlatform('xiaohongshu');
-  else if (url.includes('bilibili.com') || url.includes('b23.tv')) updatePlatform('bilibili');
-});
-
-function updatePlatform(p) {
-  state.platform = p;
-  $$('.platform-badge').forEach(x => x.classList.toggle('active', x.dataset.p === p));
-}
-
-// Log
-function log(msg, cls='info') {
+function log(msg, cls = 'info') {
   const d = document.createElement('div');
-  d.className = `log-line ${cls}`;
-  d.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+  d.className = 'log-line ' + cls;
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
   $('#logArea').appendChild(d);
   $('#logArea').scrollTop = $('#logArea').scrollHeight;
 }
 
-// Progress
 function showProgress(text) {
   $('#progressWrap').classList.remove('hidden');
   $('#progressText').textContent = text;
@@ -162,22 +104,26 @@ function showProgress(text) {
 }
 function hideProgress() { $('#progressWrap').classList.add('hidden'); }
 
-// Parse
+// Platform badges
+document.querySelectorAll('.platform-badge').forEach(badge => {
+  badge.addEventListener('click', () => {
+    document.querySelectorAll('.platform-badge').forEach(b => b.classList.remove('active'));
+    badge.classList.add('active');
+  });
+});
+
+// Parse button
 $('#btnParse').addEventListener('click', async () => {
   const url = $('#linkInput').value.trim();
-  if (!url) { log('请粘贴链�?, 'error'); return; }
+  if (!url) { log('请粘贴链接', 'error'); return; }
 
   $('#btnParse').disabled = true;
-  $('#btnParse').textContent = '�?解析�?..';
+  $('#btnParse').textContent = '⏳ 解析中...';
   showProgress('正在解析...');
-  log(`开始解�? ${url}`);
+  log('开始解析: ' + url);
 
   try {
-    const apiUrl = state.proxyUrl.startsWith('/') 
-      ? state.proxyUrl 
-      : state.proxyUrl;
-    
-    const resp = await fetch(apiUrl, {
+    const resp = await fetch(state.proxyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url, type: 'parse' })
@@ -185,17 +131,14 @@ $('#btnParse').addEventListener('click', async () => {
     const data = await resp.json();
     $('#progressFill').style.width = '80%';
 
-    if (!data.success && data.error) {
-      throw new Error(data.error);
-    }
-
+    if (!data.success && data.error) throw new Error(data.error);
     state.result = data;
     renderResult(data);
     $('#resultCard').classList.remove('hidden');
     $('#progressFill').style.width = '100%';
-    log(`�?解析成功: ${data.title || '未知标题'}`, 'success');
+    log('✅ 解析成功: ' + (data.title || '未知标题'), 'success');
   } catch (err) {
-    log(`�?解析失败: ${err.message}`, 'error');
+    log('❌ 解析失败: ' + err.message, 'error');
   } finally {
     hideProgress();
     $('#btnParse').disabled = false;
@@ -207,114 +150,55 @@ function renderResult(data) {
   const area = $('#resultArea');
   let html = '';
 
-  // Media preview
   if (data.type === 'video' && data.videoUrl) {
-    html += `<video src="${data.videoUrl}" controls style="width:100%;max-height:400px;border-radius:8px;background:#000"></video>`;
+    html += '<video src="' + data.videoUrl + '" controls style="width:100%;max-height:400px;border-radius:8px;background:#000"></video>';
   } else if (data.type === 'video') {
-    html += '<div style="padding:40px;text-align:center;color:var(--text2)">🎬 视频链接需通过第三方工具获�?/div>';
+    html += '<div style="padding:40px;text-align:center;color:var(--text2)">🎬 视频链接需通过第三方工具获取</div>';
   }
 
   if (data.cover && !data.videoUrl) {
-    html += `<img src="${data.cover}" style="width:100%;max-height:300px;object-fit:contain;border-radius:8px;background:#000">`;
+    html += '<img src="' + data.cover + '" style="width:100%;max-height:300px;object-fit:contain;border-radius:8px;background:#000">';
   }
 
-  // Images
   if (data.images && data.images.length > 0) {
     html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">';
     data.images.forEach(img => {
-      html += `<img src="${img}" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer" onclick="window.open('${img}')">`;
+      html += '<img src="' + img + '" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;cursor:pointer" onclick="window.open(\'' + img + '\')">';
     });
     html += '</div>';
   }
 
-  // Info
   html += '<div style="margin-top:12px">';
-  if (data.title) html += `<div style="font-weight:600;font-size:15px">${data.title}</div>`;
-  if (data.author) html += `<div style="color:var(--accent);font-size:13px;margin-top:4px">👤 ${data.author}</div>`;
-  if (data.description) html += `<div style="color:var(--text2);font-size:13px;margin-top:4px">${data.description}</div>`;
+  if (data.title) html += '<div style="font-weight:600;font-size:15px">' + data.title + '</div>';
+  if (data.author) html += '<div style="color:var(--accent);font-size:13px;margin-top:4px">👤 ' + data.author + '</div>';
+  if (data.description) html += '<div style="color:var(--text2);font-size:13px;margin-top:4px">' + data.description + '</div>';
   html += '</div>';
 
-  // Actions
   html += '<div class="result-actions">';
-  if (data.videoUrl) {
-    html += `<button class="btn btn-primary btn-sm" onclick="downloadMedia('${data.videoUrl}', 'video.mp4')">�?下载视频</button>`;
-  }
-  if (data.cover) {
-    html += `<button class="btn btn-outline btn-sm" onclick="downloadMedia('${data.cover}', 'cover.jpg')">🖼 下载封面</button>`;
-  }
-  if (data.images) {
-    html += `<button class="btn btn-outline btn-sm" onclick="downloadAllImages()">📦 下载全部图片</button>`;
-  }
-  html += `<button class="btn btn-outline btn-sm" id="btnFetchComments">💬 查看评论</button>`;
+  if (data.videoUrl) html += '<button class="btn btn-primary btn-sm" onclick="downloadMedia(\'' + data.videoUrl + '\', \'video.mp4\')">⬇ 下载视频</button>';
+  if (data.cover) html += '<button class="btn btn-outline btn-sm" onclick="downloadMedia(\'' + data.cover + '\', \'cover.jpg\')">🖼 下载封面</button>';
+  if (data.images) html += '<button class="btn btn-outline btn-sm" onclick="downloadAllImages()">📦 下载全部图片</button>';
   html += '</div>';
 
   area.innerHTML = html;
-
-  // Comments button
-  $('#btnFetchComments')?.addEventListener('click', fetchComments);
 }
 
 function downloadMedia(url, filename) {
   const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.target = '_blank';
+  a.href = url; a.download = filename; a.target = '_blank';
   a.click();
-  log(`开始下�? ${filename}`);
+  log('开始下载: ' + filename);
 }
 
 function downloadAllImages() {
-  if (!state.result?.images) return;
+  if (!state.result || !state.result.images) return;
   state.result.images.forEach((img, i) => {
-    setTimeout(() => downloadMedia(img, `image_${i+1}.jpg`), i * 500);
+    setTimeout(() => downloadMedia(img, 'image_' + (i+1) + '.jpg'), i * 500);
   });
-  log(`正在下载 ${state.result.images.length} 张图�?..`);
+  log('正在下载 ' + state.result.images.length + ' 张图片...');
 }
 
-async function fetchComments() {
-  $('#btnFetchComments').disabled = true;
-  $('#btnFetchComments').textContent = '�?加载�?..';
-  log('正在获取评论...');
-
-  try {
-    const resp = await fetch(state.proxyUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: $('#linkInput').value.trim(), type: 'comments' })
-    });
-    const data = await resp.json();
-    
-    if (data.success && data.comments) {
-      renderComments(data.comments);
-    } else {
-      log(data.message || '暂无评论数据', 'error');
-    }
-  } catch (err) {
-    log(`评论获取失败: ${err.message}`, 'error');
-  } finally {
-    $('#btnFetchComments').disabled = false;
-    $('#btnFetchComments').textContent = '💬 查看评论';
-  }
-}
-
-function renderComments(comments) {
-  const area = $('#commentArea');
-  let html = '';
-  comments.forEach(c => {
-    html += `<div class="comment">
-      <div class="user">${c.user}</div>
-      <div class="text">${c.text}</div>
-      <div class="time">${c.time || ''}</div>
-    </div>`;
-  });
-  area.innerHTML = html;
-  $('#commentCard').classList.remove('hidden');
-  log(`加载�?${comments.length} 条评论`, 'success');
-}
-
-// Init
-log('💡 支持: 抖音短链�?/ 小红书分享链�?/ B站视频链�?);
-log('�?部分平台需要登录Cookie才能完整解析，基础信息可直接提�?);
+log('💡 支持: 抖音短链 / 小红书分享链接 / B站视频链接');
 </script>
 </body>
 </html>
